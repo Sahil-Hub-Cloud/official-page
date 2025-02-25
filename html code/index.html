@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Loyola Institutes of Technology and Management</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+            position: relative;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .background-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .background-container img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            animation: fadeInOut 20s infinite;
+        }
+
+        .background-container img:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .background-container img:nth-child(2) {
+            animation-delay: 5s;
+        }
+
+        .background-container img:nth-child(3) {
+            animation-delay: 10s;
+        }
+
+        .background-container img:nth-child(4) {
+            animation-delay: 15s;
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            25%, 75% { opacity: 1; }
+        }
+
+        header {
+            padding: 20px;
+            font-size: 2em;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            color: #f39c12;
+            animation: slideFromTop 2s ease-in-out;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            animation: slideFromLeft 1.5s ease-in-out;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            font-size: 1.2em;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        nav ul li a::after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #f39c12;
+            transition: width 0.3s;
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        .welcome-section {
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.7);
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInSlide 3s ease-in-out forwards;
+        }
+
+        .welcome-section h2 {
+            color: gold;
+            font-size: 2em;
+        }
+
+        .welcome-section p {
+            font-size: 1.2em;
+            line-height: 1.5;
+            color: white;
+        }
+
+        @keyframes fadeInSlide {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .video-section {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 800px;
+        }
+
+        .video-title {
+            color: gold;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-container">
+        <img src="https://i.imgur.com/j8xWjOT.jpeg" alt="Background 1">
+        <img src="https://i.imgur.com/cqsOa3i.jpeg" alt="Background 2">
+        <img src="https://i.imgur.com/VAoqvA3.jpeg" alt="Background 3">
+        <img src="https://i.imgur.com/n7iXvsh.jpeg" alt="Background 4">
+    </div>
+
+    <header>Loyola Institutes of Technology and Management</header>
+    <nav>
+        <ul>
+            <li><a href="abo.html">About</a></li>
+            <li><a href="q.html">Skill Hub</a></li>
+            <li><a href="u.html">Gallery</a></li>
+            <li><a href="addm.html">Admissions</a></li>
+            <li><a href="con.html">Contacts</a></li>
+        </ul>
+    </nav>
+
+    <div class="welcome-section">
+        <h2>Welcome to Loyola Institutes of Technology and Management</h2>
+        <p>We strive to provide a stress-free and student-friendly learning environment. Our institution empowers students with knowledge and skills that shape their future. Join us and be part of an innovative, dynamic, and inclusive community.</p>
+    </div>
+
+    <div class="video-section">
+        <h3 class="video-title">Loyola Institutes of Technology and Management Campus Tour</h3>
+        <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/cI4685QAeTA" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <p class="video-description" style="color: blue">
+            Loyola Institutes of Technology and Management is a student-friendly and stress-free educational institution where every student chooses the right path for success and changes their life under good guidance and a friendly atmosphere.
+        </p>
+    </div>
+</body>
+</html>

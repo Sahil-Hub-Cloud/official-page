@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Gallery - Loyola Institutes of Technology and Management</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #34495e, #1abc9c);
+            color: white;
+            text-align: center;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background: transparent;
+            padding: 20px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 20px;
+            margin: 0;
+            font-size: 2.2em;
+            animation: fadeInUp 1.5s ease-in-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            padding-top: 80px;
+        }
+
+        .filter-buttons {
+            margin-bottom: 15px;
+        }
+        .filter-buttons button {
+            padding: 8px 16px;
+            margin: 4px;
+            border: none;
+            cursor: pointer;
+            background: #e67e22;
+            color: white;
+            font-size: 0.9em;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+        .filter-buttons button.active {
+            background: #d35400;
+        }
+        .filter-buttons button:hover {
+            background: #d35400;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            padding: 15px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 3px 6px rgba(255, 255, 255, 0.2);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+        .lightbox img {
+            max-width: 85%;
+            max-height: 85%;
+            border-radius: 8px;
+        }
+        .lightbox .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+        }
+
+        .lightbox .nav-btn {
+            position: absolute;
+            color: white;
+            font-size: 2em;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .lightbox .nav-btn:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox .prev {
+            left: 20px;
+        }
+
+        .lightbox .next {
+            right: 20px;
+        }
+
+        .image-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.6);
+            color: white;
+            padding: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .gallery-item:hover .image-caption {
+            opacity: 1;
+        }
+
+        /* Fallback for no JavaScript */
+        .no-js-message {
+            display: none;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .image-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav></nav>
+        <h1>Our Gallery</h1>
+    </header>
+
+    <div class="container">
+        <div class="filter-buttons" role="tablist" aria-label="Gallery categories">
+            <button onclick="filterGallery(event, 'all')" class="active" role="tab" aria-selected="true" aria-controls="all-panel">All</button>
+            <button onclick="filterGallery(event, 'campus')" role="tab" aria-selected="false" aria-controls="campus-panel">Campus Life</button>
+            <button onclick="filterGallery(event, 'sports')" role="tab" aria-selected="false" aria-controls="sports-panel">Sports</button>
+            <button onclick="filterGallery(event, 'cultural')" role="tab" aria-selected="false" aria-controls="cultural-panel">Cultural Events</button>
+            <button onclick="filterGallery(event, 'workshops')" role="tab" aria-selected="false" aria-controls="workshops-panel">Workshops</button>
+        </div>
+
+        <div class="no-js-message">
+            <p>JavaScript is required to view this gallery. Please enable JavaScript in your browser settings.</p>
+        </div>
+
+        <div class="gallery">
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/bm5kGH7.jpeg" alt="Main academic building entrance with students walking" loading="lazy">
+                <div class="image-caption">Main Campus Building</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/B6NJjjQ.jpeg" alt="Students studying in the campus library" loading="lazy">
+                <div class="image-caption">Library Study Area</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/ldy5OyW.jpeg" alt="Campus garden with blooming flowers and walkway" loading="lazy">
+                <div class="image-caption">Campus Gardens</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/YdYG9Jt.jpeg" alt="Modern computer lab with students working" loading="lazy">
+                <div class="image-caption">Computer Lab</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/HY6qMYu.jpeg" alt="Campus cafeteria during lunch time" loading="lazy">
+                <div class="image-caption">Campus Cafeteria</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/Drb8ji9.jpeg" alt="Student lounge area with comfortable seating" loading="lazy">
+                <div class="image-caption">Student Lounge</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/lH0xGXY.jpeg" alt="Outdoor seating area between academic buildings" loading="lazy">
+                <div class="image-caption">Outdoor Study Area</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/HWUsvD8.jpeg" alt="Campus aerial view showing all buildings" loading="lazy">
+                <div class="image-caption">Aerial View of Campus</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/9KFOKwL.jpeg" alt="Administration building entrance with staff" loading="lazy">
+                <div class="image-caption">Admin Building</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item campus" tabindex="0">
+                <img src="https://i.imgur.com/NWIgxqE.jpeg" alt="Campus lawn with students relaxing between classes" loading="lazy">
+                <div class="image-caption">Campus Lawn</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/YWbq6m2.jpeg" alt="Basketball match between college teams" loading="lazy">
+                <div class="image-caption">Basketball Tournament</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/z4Z24YW.jpeg" alt="Football match on the college ground" loading="lazy">
+                <div class="image-caption">Annual Football Match</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/ZSUGbCA.jpeg" alt="Students playing volleyball on campus court" loading="lazy">
+                <div class="image-caption">Volleyball Practice</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/qbJS9ys.jpeg" alt="Track and field event with runners" loading="lazy">
+                <div class="image-caption">Annual Athletics Meet</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/eDMU5f0.jpeg" alt="Tennis match on campus courts" loading="lazy">
+                <div class="image-caption">Tennis Tournament</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item sports" tabindex="0">
+                <img src="https://i.imgur.com/WbUDHwK.jpeg" alt="Swimming competition in campus pool" loading="lazy">
+                <div class="image-caption">Swimming Competition</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item cultural" tabindex="0">
+                <img src="https://i.imgur.com/Wp8D3dQ.jpeg" alt="Annual cultural fest dance performance" loading="lazy">
+                <div class="image-caption">Dance Performance</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item cultural" tabindex="0">
+                <img src="https://i.imgur.com/pHSuNGZ.jpeg" alt="Music concert during cultural week" loading="lazy">
+                <div class="image-caption">Music Concert</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item cultural" tabindex="0">
+                <img src="https://i.imgur.com/P36ZIoF.jpeg" alt="Theater performance by drama club" loading="lazy">
+                <div class="image-caption">Theater Performance</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item cultural" tabindex="0">
+                <img src="https://i.imgur.com/wIdFWXU.jpeg" alt="Fashion show organized by design students" loading="lazy">
+                <div class="image-caption">Annual Fashion Show</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item cultural" tabindex="0">
+                <img src="https://i.imgur.com/UBCrZnA.jpeg" alt="Art exhibition by fine arts department" loading="lazy">
+                <div class="image-caption">Art Exhibition</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/ELRjM1C.jpeg" alt="Robotics workshop with students building prototypes" loading="lazy">
+                <div class="image-caption">Robotics Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/mkqxHQE.jpeg" alt="Programming workshop with students coding" loading="lazy">
+                <div class="image-caption">Coding Bootcamp</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/D0BrEl2.jpeg" alt="Design thinking workshop with project displays" loading="lazy">
+                <div class="image-caption">Design Thinking Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/EshRITp.jpeg" alt="IoT workshop with hands-on demonstrations" loading="lazy">
+                <div class="image-caption">IoT Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/sswt4xa.jpeg" alt="Entrepreneurship seminar with guest speaker" loading="lazy">
+                <div class="image-caption">Entrepreneurship Seminar</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/Ax8UzqW.jpeg" alt="Machine learning workshop with data visualization" loading="lazy">
+                <div class="image-caption">Machine Learning Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/GcSRi8j.jpeg" alt="Electronics workshop with circuit building" loading="lazy">
+                <div class="image-caption">Electronics Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/VnfyeGK.jpeg" alt="AR/VR technology demonstration workshop" loading="lazy">
+                <div class="image-caption">AR/VR Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/Mnz4L5p.jpeg" alt="3D printing workshop with student projects" loading="lazy">
+                <div class="image-caption">3D Printing Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+            <div class="gallery-item workshops" tabindex="0">
+                <img src="https://i.imgur.com/8BkPbOk.jpeg" alt="Cybersecurity workshop with hacking demonstration" loading="lazy">
+                <div class="image-caption">Cybersecurity Workshop</div>
+                <div class="image-loading">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lightbox" id="lightbox" role="dialog" aria-label="Image lightbox">
+        <span class="close" onclick="closeLightbox()" aria-label="Close lightbox">&times;</span>
+        <span class="nav-btn prev" onclick="navigateLightbox(-1)" aria-label="Previous image">&lt;</span>
+        <img id="lightbox-img" src="" alt="">
+        <span class="nav-btn next" onclick="navigateLightbox(1)" aria-label="Next image">&gt;</span>
+    </div>
+
+    <script>
+        // Global variables for lightbox navigation
+        let currentImageIndex = 0;
+        let visibleImages = [];
+
+        // Show JS-required content, hide no-JS message
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.no-js-message').style.display = 'none';
+            filterGallery(null, 'all');
+
+            // Add keyboard support for lightbox
+            document.addEventListener('keydown', function(e) {
+                if (document.getElementById('lightbox').style.display === 'flex') {
+                    if (e.key === 'Escape') {
+                        closeLightbox();
+                    } else if (e.key === 'ArrowLeft') {
+                        navigateLightbox(-1);
+                    } else if (e.key === 'ArrowRight') {
+                        navigateLightbox(1);
+                    }
+                }
+            });
+
+            // Add keyboard accessibility for gallery items
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        this.querySelector('img').click();
+                    }
+                });
+            });
+        });
+
+        // Image loading error handling
+        document.querySelectorAll('.gallery-item img').forEach(img => {
+            const loadingIndicator = img.parentElement.querySelector('.image-loading');
+
+            img.addEventListener('load', function() {
+                loadingIndicator.style.display = 'none';
+            });
+
+            img.addEventListener('error', function() {
+                loadingIndicator.textContent = 'Failed to load image';
+                loadingIndicator.style.display = 'block';
+                this.alt = 'Image failed to load';
+            });
+
+            // Show loading indicator
+            loadingIndicator.style.display = 'block';
+        });
+
+        function filterGallery(event, category) {
+            let items = document.querySelectorAll('.gallery-item');
+
+            // Update visible images array for lightbox navigation
+            visibleImages = [];
+
+            items.forEach((item, index) => {
+                const shouldDisplay = category === 'all' || item.classList.contains(category);
+                item.style.display = shouldDisplay ? 'block' : 'none';
+
+                if (shouldDisplay) {
+                    visibleImages.push(index);
+                }
+            });
+
+            // Update active button state
+            document.querySelectorAll('.filter-buttons button').forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-selected', 'false');
+            });
+
+            // Only update if event is provided (not on initial load)
+            if (event) {
+                event.target.classList.add('active');
+                event.target.setAttribute('aria-selected', 'true');
+            } else {
+                // Set "All" as default active on load
+                document.querySelector('.filter-buttons button').classList.add('active');
+                document.querySelector('.filter-buttons button').setAttribute('aria-selected', 'true');
+            }
+        }
+
+        // Setup image click handlers
+        document.querySelectorAll('.gallery-item img').forEach((img, index) => {
+            img.addEventListener('click', function() {
+                const lightboxImg = document.getElementById('lightbox-img');
+
+                // Set the current image index
+                currentImageIndex = visibleImages.indexOf(index);
+
+                // Show loading indicator before image loads
+                lightboxImg.style.opacity = '0.5';
+
+                // Set source and show lightbox
+                lightboxImg.src = this.src;
+                lightboxImg.alt = this.alt;
+                document.getElementById('lightbox').style.display = 'flex';
+
+                // Reset opacity when image loads
+                lightboxImg.onload = function() {
+                    lightboxImg.style.opacity = '1';
+                };
+            });
+        });
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        function navigateLightbox(direction) {
+            // Get next image index with wraparound
+            if (visibleImages.length <= 1) return;
+
+            currentImageIndex = (currentImageIndex + direction + visibleImages.length) % visibleImages.length;
+            const nextImageIndex = visibleImages[currentImageIndex];
+            const nextImage = document.querySelectorAll('.gallery-item img')[nextImageIndex];
+
+            // Update lightbox image
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.style.opacity = '0.5';
+            lightboxImg.src = nextImage.src;
+            lightboxImg.alt = nextImage.alt;
+
+            // Reset opacity when image loads
+            lightboxImg.onload = function() {
+                lightboxImg.style.opacity = '1';
+            };
+        }
+
+        // Clean up event listeners when the page is unloaded
+        window.addEventListener('beforeunload', function() {
+            // Explicit cleanup for major event listeners
+            document.querySelectorAll('.gallery-item img').forEach(img => {
+                img.removeEventListener('click', null);
+                img.removeEventListener('load', null);
+                img.removeEventListener('error', null);
+            });
+
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.removeEventListener('keydown', null);
+            });
+
+            document.removeEventListener('keydown', null);
+        });
+    </script>
+</body>
+</html>

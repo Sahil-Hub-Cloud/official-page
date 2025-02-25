@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admission Portal - Loyola Institutes</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #1e3c72, #2a5298);
+            color: white;
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        header {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            font-size: 1.8em;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+        .container {
+            margin: 50px auto;
+            width: 80%;
+            max-width: 500px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transition: 0.5s;
+        }
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+        .full-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .hidden {
+            display: none;
+        }
+        .form-container {
+            background: white;
+            color: black;
+            padding: 40px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            position: relative;
+        }
+        .form-container h2 {
+            margin-top: 0;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+        button {
+            background: #f39c12;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #e67e22;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            background: none;
+            border: none;
+        }
+    </style>
+    <script>
+        function showForm(course) {
+            document.getElementById('selectedCourse').innerText = course;
+            document.getElementById('selectedCourseInput').value = course; // Store in hidden input
+            document.getElementById('applicationForm').classList.remove('hidden');
+        }
+        
+        function closeForm() {
+            document.getElementById('applicationForm').classList.add('hidden');
+        }
+
+        function validateForm(event) {
+            let firstName = document.getElementById("firstName").value.trim();
+            let lastName = document.getElementById("lastName").value.trim();
+            let dob = document.getElementById("dob").value;
+            let mobile = document.getElementById("mobile").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let branch = document.getElementById("branch").value;
+
+            if (!firstName || !lastName || !dob || !mobile || !email || branch === "") {
+                alert("Please fill out all fields before submitting.");
+                event.preventDefault(); // Prevent form submission
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>Admission Portal</header>
+    <div class="container">
+        <button onclick="showForm('Diploma')">Diploma</button>
+        <button onclick="showForm('B.Tech')">B.Tech</button>
+        <button onclick="showForm('MBA')">MBA</button>
+    </div>
+    
+    <div id="applicationForm" class="full-page hidden">
+        <div class="form-container" onclick="event.stopPropagation();">
+            <button class="close-btn" onclick="closeForm()">×</button>
+            <h2>Application Form - <span id="selectedCourse"></span></h2>
+            <form onsubmit="validateForm(event)">
+                <input type="hidden" id="selectedCourseInput" name="course">
+                <input type="text" id="firstName" placeholder="First Name" required>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+                
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" required>
+                
+                <input type="tel" id="mobile" placeholder="Mobile Number" required>
+                <input type="email" id="email" placeholder="Email ID" required>
+                
+                <label for="branch">Select Favourite Branch</label>
+                <select id="branch" required>
+                    <option value="">Select Branch</option>
+                    <option value="CSE">Computer Science</option>
+                    <option value="ECE">Electronics & Communication</option>
+                    <option value="MECH">Mechanical Engineering</option>
+                    <option value="CIVIL">Civil Engineering</option>
+                    <option value="MBA">MBA</option>
+                </select>
+                
+                <button type="submit">Apply Now</button>
+                <button type="button" onclick="closeForm()">Close</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
