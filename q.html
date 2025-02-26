@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Hub</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(45deg, #ff416c, #ff4b2b);
+            animation: backgroundAnimation 10s infinite alternate;
+            text-align: center;
+            color: white;
+            scroll-behavior: smooth;
+        }
+        @keyframes backgroundAnimation {
+            0% { background: linear-gradient(45deg, #ff416c, #ff4b2b); }
+            100% { background: linear-gradient(45deg, #4b79a1, #283e51); }
+        }
+        .container {
+            padding: 50px;
+        }
+        h1 {
+            font-size: 3em;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h2 {
+            margin-top: 50px;
+            font-size: 2em;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            color: white;
+            background: #ff4b2b;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(255, 75, 43, 0.5);
+        }
+        .btn:hover {
+            background: white;
+            color: #ff4b2b;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+        .section {
+            display: none;
+            padding: 50px 0;
+        }
+        .visible {
+            display: block;
+        }
+        .card-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+        .card {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            margin: 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            transition: 0.5s;
+        }
+        .card:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        }
+        .card img {
+            width: 40%;
+            border-radius: 10px;
+        }
+        .card-content {
+            width: 60%;
+            padding: 20px;
+            text-align: left;
+        }
+    </style>
+    <script>
+        function showSection() {
+            document.getElementById("web-development").classList.add("visible");
+            document.getElementById("graphic-design").classList.add("visible");
+            document.getElementById("programming").classList.add("visible");
+            document.getElementById("web-development").scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to Skill Hub</h1>
+        <button class="btn" onclick="showSection()">Explore Now</button>
+    </div>
+
+    <div id="web-development" class="section visible card-container">
+        <h2>Web Development</h2>
+        <div class="card">
+            <img src="https://i.imgur.com/GyiKoNY.jpeg" alt="HTML & CSS">
+            <div class="card-content">
+                <h3>HTML & CSS</h3>
+                <p>Build stunning web pages with HTML & CSS.HTML (HyperText Markup Language) and CSS (Cascading Style Sheets) are the foundational technologies for building and designing web pages. HTML provides the structure of the page, while CSS defines the style, layout, and overall presentation. Mastery of these technologies opens up endless possibilities for creating visually appealing and functional websites.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://i.imgur.com/I7oisYC.jpeg" alt="JavaScript">
+            <div class="card-content">
+                <h3>JavaScript</h3>
+                <p>Enhance interactivity using JavaScript.JavaScript is the backbone of modern web development. It enables you to add interactivity, animations, and dynamic content to websites. From simple form validations to complex web applications, JavaScript is a powerful tool that brings your web pages to life.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="graphic-design" class="section card-container">
+        <h2>Graphic Design</h2>
+        <div class="card">
+            <img src="https://i.imgur.com/WI8BpRj.jpeg" alt="Photoshop">
+            <div class="card-content">
+                <h3>Photoshop</h3>
+                <p>Create stunning visual designs using Photoshop.Photoshop is the industry standard for digital image editing and design. Whether you're a photographer, graphic designer, or simply someone who loves to create, mastering Photoshop opens up a world of possibilities. From basic photo enhancements to intricate digital art, Photoshop offers endless creative potential.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://i.imgur.com/ytBGJpn.jpeg" alt="Illustrator">
+            <div class="card-content">
+                <h3>Illustrator</h3>
+                <p>Vector-based design with Adobe Illustrator.Adobe Illustrator is the industry standard for vector graphics. Unlike raster graphics, vector graphics are scalable without losing quality, making them ideal for logos, illustrations, and other design elements that require flexibility and sharpness. Whether you're a graphic designer, artist, or aspiring creative professional, mastering Illustrator will elevate your design skills to new heights.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="programming" class="section card-container">
+        <h2>Programming</h2>
+        <div class="card">
+            <img src="https://i.imgur.com/Wq12nI9.jpeg" alt="Python">
+            <div class="card-content">
+                <h3>Python</h3>
+                <p>Learn Python for web and AI development.Python is known for its simplicity and readability, making it an ideal language for beginners and experienced programmers alike. It's used in web development, data science, artificial intelligence, machine learning, automation, and more. Python's extensive libraries and frameworks provide robust tools to tackle complex problems with ease.</p>
+            </div>
+        </div>
+        <div class="card">
+            <img src="https://i.imgur.com/NM5dmzB.jpeg" alt="Java">
+            <div class="card-content">
+                <h3>Java</h3>
+                <p>Object-oriented programming with Java.Java is known for its robustness, platform independence, and extensive libraries and frameworks. It is used in various domains, including web development, mobile app development, enterprise systems, and embedded systems. Mastering Java opens up numerous career opportunities and provides a strong foundation for learning other programming languages.</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
